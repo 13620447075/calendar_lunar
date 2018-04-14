@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="取消"
+                android:layout_gravity="center_vertical"
+                android:textColor="#6ba7cf"
+                android:textSize="14sp" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp">
+
+                <TextView
+                    android:id="@+id/tv_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
+                    android:layout_marginRight="30dp"
+                    android:text="公历"
+                    android:textColor="#0071ff" />
+
+                <TextView
+                    android:id="@+id/tv_lunar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="3dp"
+                    android:layout_marginLeft="30dp"
+                    android:paddingTop="3dp"
+                    android:text="农历"
+                    android:textColor="#0071ff" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_gravity="center_vertical"
+                android:text="确定"
+                android:textColor="#6ba7cf"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp">
+
+            <com.example.asus.calendarselector.calendar.StringScrollPicker
+                android:id="@+id/ssp_year"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                app:spv_max_text_size="18dp"
+                app:spv_min_text_size="16sp"
+                app:spv_visible_item_count="5" />
+
+            <com.example.asus.calendarselector.calendar.StringScrollPicker
+                android:id="@+id/ssp_month"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                app:spv_max_text_size="18dp"
+                app:spv_min_text_size="16dp"
+                app:spv_visible_item_count="5" />
+
+            <com.example.asus.calendarselector.calendar.StringScrollPicker
+                android:id="@+id/ssp_day"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                app:spv_max_text_size="18dp"
+                app:spv_min_text_size="16dp"
+                app:spv_visible_item_count="5" />
+
+            <com.example.asus.calendarselector.calendar.StringScrollPicker
+                android:id="@+id/ssp_hour"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                app:spv_max_text_size="18dp"
+                app:spv_min_text_size="16dp"
+                app:spv_visible_item_count="5" />
+
+            <com.example.asus.calendarselector.calendar.StringScrollPicker
+                android:id="@+id/ssp_minute"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                app:spv_max_text_size="18dp"
+                app:spv_min_text_size="16dp"
+                app:spv_visible_item_count="5" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
