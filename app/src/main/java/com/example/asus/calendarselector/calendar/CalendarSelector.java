@@ -47,6 +47,7 @@ public class CalendarSelector {
     private String mSelectedMinute;
     //    private CheckBox cbHideYear;
     private boolean isHideYear = false;
+    private String calendarType = "average";
 
     /**
      * 初始化年月日
@@ -81,7 +82,6 @@ public class CalendarSelector {
                             ICalendarSelectorCallBack iCalendarSelectorCallBack) {
         this.mContext = context;
         this.mCallBack = iCalendarSelectorCallBack;
-//        this.mYearPosition = position;
         initData();
         initView();
         initListener();
@@ -100,7 +100,7 @@ public class CalendarSelector {
         for (int i = 1; i < 13; i++) {
             mMonthList.add(i + "月");
         }
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 24; i++) {
             mHourList.add(i + "时");
         }
         for (int i = 0; i < 61; i++) {
@@ -116,7 +116,6 @@ public class CalendarSelector {
         mDayPicker = v.findViewById(R.id.ssp_day);
         mHourPicker = v.findViewById(R.id.ssp_hour);
         mMinutePicker = v.findViewById(R.id.ssp_minute);
-//        cbHideYear = v.findViewById(R.id.cb_ignore);
         tvConfirm = v.findViewById(R.id.tv_confirm);
         tvCancel = v.findViewById(R.id.tv_cancel);
         tvAverage = v.findViewById(R.id.tv_average);
@@ -191,6 +190,9 @@ public class CalendarSelector {
         });
     }
 
+    /**
+     *
+     */
     private void setMonthList() {
         mMonthList = (List<String>) mMap.get("month");
         mMonthPicker.setData(mMonthList);
@@ -201,6 +203,9 @@ public class CalendarSelector {
         setDayList();
     }
 
+    /**
+     *
+     */
     private void setDayList() {
         mDayList = ((List<List<String>>) mMap.get("day")).get(mMonthPosition);
         mDayPicker.setData(mDayList);
@@ -233,8 +238,9 @@ public class CalendarSelector {
                 map.put("year", mSelectedYear);
                 map.put("month", mSelectedMonth);
                 map.put("day", mSelectedDay);
-                map.put("hour", mSelectedHour);//////////////////////////////
+                map.put("hour", mSelectedHour);
                 map.put("minute", mSelectedMinute);
+                map.put("calender", calendarType);
                 mCallBack.transmitPeriod(map);
                 mPopupWindow.dismiss();
             }
@@ -245,22 +251,6 @@ public class CalendarSelector {
                 mPopupWindow.dismiss();
             }
         });
-//        cbHideYear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (isHideYear) {
-//                    isHideYear = false;
-//                    cbHideYear.setBackground(ContextCompat.getDrawable(mContext, R.mipmap
-//                            .icon_zdy_addition));
-//                    mYearPicker.setVisibility(View.VISIBLE);
-//                } else {
-//                    isHideYear = true;
-//                    cbHideYear.setBackground(ContextCompat.getDrawable(mContext, R.mipmap
-//                            .icon_zdy_selected));
-//                    mYearPicker.setVisibility(View.GONE);
-//                }
-//            }
-//        });
         tvLunar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -285,6 +275,7 @@ public class CalendarSelector {
                 tvAverage.setBackground(ContextCompat.getDrawable(mContext, R.drawable.bg_transparent));
                 setMonthList();
                 setDayList();
+                calendarType = "lunar";
             }
         });
         tvAverage.setOnClickListener(new View.OnClickListener() {
@@ -312,6 +303,7 @@ public class CalendarSelector {
                 mMap = Utils.parseAverageYear(mYearPicker.getSelectedItem());
                 setMonthList();
                 setDayList();
+                calendarType = "average";
             }
         });
     }

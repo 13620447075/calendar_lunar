@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.asus.calendarselector.utils.LogUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Cecil on 2017/8/2.
@@ -88,13 +91,13 @@ public class Utils {
      * @param year 为了跟picker匹配，多了一个将入参去掉"年"的操作
      * @return 返回结构为
      * map={year:{xxxx}
-     *      month:{1月,...,12月}
-     *      day:{
-     *          {1日,...,xx日}
-     *          ...
-     *          {1日,...,xx日}
-     *          }
-     *      }
+     * month:{1月,...,12月}
+     * day:{
+     * {1日,...,xx日}
+     * ...
+     * {1日,...,xx日}
+     * }
+     * }
      */
     public static HashMap<String, Object> parseAverageYear(String year) {
         HashMap<String, Object> map = new HashMap<>();
@@ -142,13 +145,13 @@ public class Utils {
      * @param year 为了跟picker匹配，多了一个将入参去掉"年"的操作
      * @return 返回结构为
      * map={year:{xxxx}
-     *      month:{1月,...,12月}
-     *      day:{
-     *          {1日,...,xx日}
-     *          ...
-     *          {1日,...,xx日}
-     *          }
-     *     }
+     * month:{1月,...,12月}
+     * day:{
+     * {1日,...,xx日}
+     * ...
+     * {1日,...,xx日}
+     * }
+     * }
      */
     public static HashMap<String, Object> parseLunarYear(String year) {
         HashMap<String, Object> map = new HashMap<>();
@@ -220,25 +223,27 @@ public class Utils {
      * @param year 为了跟picker匹配，多了一个将入参去掉"年"的操作
      * @return 返回结构为
      * map={year:{xxxx}
-     *      month:{1月,...,12月}
-     *      day:{
-     *          {1日,...,xx日}
-     *          ...
-     *          {1日,...,xx日}
-     *          }
-     *      yearPosition:X
-     *      monthPosition:X
-     *      dayPosition:X
-     *     }
-     *
-     *     yearPosition/monthPosition/dayPosition方便在日期选择器定位，平常使用可忽略这三个数据
+     * month:{1月,...,12月}
+     * day:{
+     * {1日,...,xx日}
+     * ...
+     * {1日,...,xx日}
+     * }
+     * yearPosition:X
+     * monthPosition:X
+     * dayPosition:X
+     * }
+     * <p>
+     * yearPosition/monthPosition/dayPosition方便在日期选择器定位，平常使用可忽略这三个数据
      */
     public static HashMap<String, Object> lunar2Average(String year, int monthPosition, int
             dayPosition) {
+
+        LogUtils.e("传入：" + year + "." + monthPosition + "." + dayPosition);
         HashMap<String, Object> lunarMap = parseLunarYear(year);
         year = year.split("年")[0];
         int yearNum = Integer.parseInt(year);
-        int[] monthMixAmount = yearNum%4 == 0?LEAP_MONTHS_MIX_AMOUNT :
+        int[] monthMixAmount = yearNum % 4 == 0 ? LEAP_MONTHS_MIX_AMOUNT :
                 AVERAGE_MONTHS_MIX_AMOUNT;
         HashMap<String, Object> map = average2Lunar(yearNum + 1 + "年", 0, 0);
         int newYearMonth = (int) map.get("monthPosition");//明年元旦对应今年的阴历月份
@@ -303,6 +308,7 @@ public class Utils {
                 }
             }
         }
+        LogUtils.e("输出map：" + map);
         return map;
     }
 
@@ -312,25 +318,25 @@ public class Utils {
      * @param year 为了跟picker匹配，多了一个将入参去掉"年"的操作
      * @return 返回结构为
      * map={year:{xxxx}
-     *      month:{1月,...,12月}
-     *      day:{
-     *          {1日,...,xx日}
-     *          ...
-     *          {1日,...,xx日}
-     *          }
-     *      yearPosition:X
-     *      monthPosition:X
-     *      dayPosition:X
-     *     }
-     *
-     *     yearPosition/monthPosition/dayPosition方便在日期选择器定位，平常使用可忽略这三个数据
+     * month:{1月,...,12月}
+     * day:{
+     * {1日,...,xx日}
+     * ...
+     * {1日,...,xx日}
+     * }
+     * yearPosition:X
+     * monthPosition:X
+     * dayPosition:X
+     * }
+     * <p>
+     * yearPosition/monthPosition/dayPosition方便在日期选择器定位，平常使用可忽略这三个数据
      */
     public static HashMap<String, Object> average2Lunar(String year, int monthPosition, int
             dayPosition) {
         HashMap<String, Object> lunarMap = parseLunarYear(year);
         year = year.split("年")[0];
         int yearNum = Integer.parseInt(year);
-        int[] monthMixAmount = yearNum%4 == 0?LEAP_MONTHS_MIX_AMOUNT :
+        int[] monthMixAmount = yearNum % 4 == 0 ? LEAP_MONTHS_MIX_AMOUNT :
                 AVERAGE_MONTHS_MIX_AMOUNT;
         String binaryYear = Utils.toFullBinaryString(LUNAR_YEARS[yearNum - 1901])
                 .substring(8, 32);
@@ -348,9 +354,9 @@ public class Utils {
                 if (tempCount2 > count) {
                     lunarMap.put("yearPosition", yearNum - 1901);
                     lunarMap.put("monthPosition", i);
-                    Log.d("Cecil","春节后monthPosition="+i);
+                    Log.d("Cecil", "春节后monthPosition=" + i);
                     lunarMap.put("dayPosition", count - tempCount);
-                    Log.d("Cecil","春节后dayPosition="+(count - tempCount));
+                    Log.d("Cecil", "春节后dayPosition=" + (count - tempCount));
                     break;
                 } else {
                     tempCount = tempCount2;
@@ -368,9 +374,9 @@ public class Utils {
                 if (tempCount2 >= count) {
                     lunarMap.put("yearPosition", yearNum - 1 - 1901);
                     lunarMap.put("monthPosition", i);
-                    Log.d("Cecil","春节前monthPosition="+i);
+                    Log.d("Cecil", "春节前monthPosition=" + i);
                     lunarMap.put("dayPosition", dayList.get(i).size() - (count - tempCount));
-                    Log.d("Cecil","春节前dayPosition="+(dayList.get(i).size() - (count - tempCount)));
+                    Log.d("Cecil", "春节前dayPosition=" + (dayList.get(i).size() - (count - tempCount)));
                     break;
                 } else {
                     tempCount = tempCount2;
@@ -379,6 +385,52 @@ public class Utils {
         }
         return lunarMap;
     }
+
+    /**
+     * 自定义公历转农历
+     * year  2018
+     * month  1
+     * day   26
+     * 输出格式：2017腊月廿七
+     */
+    public static Map<String, String> averageToLunar(int year, int month, int day) {
+        HashMap<String, Object> mMap = Utils.average2Lunar(year + "年",
+                month - 1, day - 1);
+        int mDayPosition = (int) mMap.get("dayPosition");
+        int mMonthPosition = (int) mMap.get("monthPosition");
+        String y = (String) mMap.get("year");
+        List<String> mMonthList = (List<String>) mMap.get("month");
+        String m = mMonthList.get(mMonthPosition);
+        List<String> mDayList = ((List<List<String>>) mMap.get("day")).get(mMonthPosition);
+        String d = mDayList.get(mDayPosition);
+        Map<String, String> LMap = new HashMap<>();
+        LMap.put("year", y);
+        LMap.put("month", m);
+        LMap.put("day", d);
+        return LMap;
+    }
+
+    /**
+     * 自定义农历转公历
+     * year   2018
+     * month   01
+     * day     12
+     */
+    public static Map<String, Integer> lunaToAverage(int year, int month, int day) {
+        Map<String, Object> map = Utils.lunar2Average(year + "年", month - 1, day - 1);
+        int y = (int) map.get("yearPosition");
+        int m = (int) map.get("monthPosition");
+        int d = (int) map.get("dayPosition");
+        int mY = y + 1901;
+        int mM = m + 1;
+        int mD = d + 1;
+        Map<String, Integer> AMap = new HashMap<>();
+        AMap.put("year", mY);
+        AMap.put("month", mM);
+        AMap.put("day", mD);
+        return AMap;
+    }
+
 
     public static void hideSoftInput(Activity context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context
